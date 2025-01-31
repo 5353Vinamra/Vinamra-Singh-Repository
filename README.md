@@ -149,6 +149,40 @@ Fully customizable – Allows modification of standard libraries.
 Enables innovation – Ideal for startups, universities, and research labs.
 Compatible with SkyWater 130nm PDK – A free process design kit (PDK) for real chip manufacturing.
 
+## Section 1 Labs
+
+### Run "picorav32a" synthesis using OpenLane and generat output
+
+1. Go to Openlane Directory
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+```
+2. Run the command Docker
+
+```bash
+docker
+```
+3. Go to interactive mode
+```tcl
+#Use this command to go to interactive mode
+./flow.tcl -interactive
+
+#input required packages using this command
+package require openlane 0.9
+
+
+#The OpenLANE flow is now set up to handle any design. Before running a specific design like 'picorv32a', we first need to create important files and directories to prepare the environment using this command
+
+prep -design picorv32a
+
+#Finally run synthesis using this command
+run_synthesis
+
+```
+
+
+
 
 
 
