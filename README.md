@@ -324,7 +324,10 @@ Transition Time refers to the time it takes for a signal to change between its l
 #### Section 2 Lab Tasks
 
 1. Run 'picorv32a' floorplan using OpenLANE flow and get the Output
-2.
+2. Calculate die area
+3. Load floorplan in Magic tool and explore it
+4. Run 'picorv32a' design placement using OpenLANE flow and get the output.
+5. Load placement in Magic tool and explore it
 
 1. Run 'picorv32a' floorplan using OpenLANE flow and get the Output
 
@@ -364,11 +367,63 @@ Screenshots of running floorplan
 
 ![Screenshot (76)](https://github.com/user-attachments/assets/b95558ff-26fe-4f47-927e-a1d4a164ce69)
 
+2. Calculate die area
 
+Screenshot of things Floorplan
 
+![Screenshot (77)](https://github.com/user-attachments/assets/43bd6cff-2b57-453d-8476-4286995ec938)
 
+```math
+1000\ Unit\ Distance = 1\ Micron
+```
+```math
+Die\ width\ in\ unit\ distance = 660685 - 0 = 660685
+```
+```math
+Die\ height\ in\ unit\ distance = 671405 - 0 = 671405
+```
+```math
+Distance\ in\ microns = \frac{Value\ in\ Unit\ Distance}{1000}
+```
+```math
+Die\ width\ in\ microns = \frac{660685}{1000} = 660.685\ Microns
+```
+```math
+Die\ height\ in\ microns = \frac{671405}{1000} = 671.405\ Microns
+```
+```math
+Area\ of\ die\ in\ microns = 660.685 * 671.405 = 443587.212425\ Square\ Microns
+```
 
+3. Load floorplan in Magic tool and explore it
 
+Commands to run floorplan in magic
+
+```bash
+# Change directory to floorplan
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/floorplan/
+
+# Command to run the floorplan in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+```
+FLoorplan in Magic
+
+![Screenshot (78)](https://github.com/user-attachments/assets/259a95f2-1500-48bd-a032-d6494fc4160f)
+
+Port layers
+
+![Screenshot (80)](https://github.com/user-attachments/assets/778a7867-1764-481d-9b42-2056f8e8aa59)
+![Screenshot (81)](https://github.com/user-attachments/assets/b8374bf8-886c-4705-a900-2a1d01a09897)
+![Screenshot (83)](https://github.com/user-attachments/assets/17ffc04d-6476-4015-9294-d1eda2a0c12d)
+
+Diagonally equal cells
+
+![Screenshot (79)](https://github.com/user-attachments/assets/5512b101-9fc6-4257-8d65-683fd9493bc6)
+
+Unplaced cells
+
+![Screenshot (81)](https://github.com/user-attachments/assets/5a9f55e8-3e60-46df-a0ce-7b5e3ae57044)
+![Screenshot (82)](https://github.com/user-attachments/assets/0aea2e0d-df40-4cbb-9b88-92c8af4df95a)
 
 
 
