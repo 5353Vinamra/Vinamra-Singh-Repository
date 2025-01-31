@@ -1,6 +1,3 @@
-![Screenshot (72)](https://github.com/user-attachments/assets/b61628e0-2a76-4cf4-afbc-f6f7e96c779e)
-![lab 2](https://github.com/user-attachments/assets/1bd2a40a-d9f1-4f40-8e60-d035f5069bfa)
-![Lab 1](https://github.com/user-attachments/assets/f37eb4d6-8c4b-4518-97bd-b7d0984955a4)
 # Vinamra-Singh-Repository
 ## Brief Overview
 ### Section 1
