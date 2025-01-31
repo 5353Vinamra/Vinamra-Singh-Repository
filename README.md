@@ -1,7 +1,8 @@
 # Vinamra-Singh-Repository
-## Brief Overview
+## Advanced Physical Design Using OpenLane/Sky130
 ### Section 1
-#### Introduction to QFN-48 Package, Chip, Pads, Core, Die, and IPs
+#### Brief Overview
+##### Introduction to QFN-48 Package, Chip, Pads, Core, Die, and IPs
 1. QFN-48 Package Overview
 QFN (Quad Flat No-Lead) 48 is a surface-mount integrated circuit (IC) package with 48 pins, commonly used in modern electronic devices. It provides excellent thermal dissipation, low electrical parasitics, and a compact footprint, making it ideal for high-performance applications like microcontrollers, RF devices, and power management ICs.
 
@@ -50,8 +51,8 @@ Custom hardware research and development
 Why is RISC-V Important?
 RISC-V is disrupting the semiconductor industry by providing an open, royalty-free alternative to traditional ISAs, promoting innovation and reducing development costs. It is supported by leading companies and organizations worldwide.
 
-### Introduction to All Components of Open-Source Digital ASIC Design
-#### What is Digital ASIC Design?
+##### Introduction to All Components of Open-Source Digital ASIC Design
+###### What is Digital ASIC Design?
 An Application-Specific Integrated Circuit (ASIC) is a custom-designed semiconductor chip tailored for a specific application (e.g., CPUs, GPUs, AI accelerators). The open-source ASIC flow provides a free alternative to proprietary EDA (Electronic Design Automation) tools.
 
 Key Components of Open-Source Digital ASIC Design
@@ -88,10 +89,10 @@ GDSII Export
 
 The final chip layout (GDSII format) is sent for fabrication.
 
-### Simplified RTL-to-GDSII Flow
+##### Simplified RTL-to-GDSII Flow
 The RTL-to-GDSII flow is the complete ASIC design process, from writing RTL code to generating a GDSII file for fabrication.
 
-#### Simplified RTL2GDS Flow:
+###### Simplified RTL2GDS Flow:
 RTL Design – Write the hardware logic in Verilog.
 Logic Synthesis (Yosys) – Convert RTL to a gate-level netlist.
 Floorplanning (OpenROAD) – Define chip layout constraints.
@@ -102,8 +103,8 @@ DRC & LVS Checks (Magic, Netgen) – Ensure manufacturability.
 GDSII Generation – Export the final layout for fabrication.
 Each step uses open-source tools, eliminating the need for proprietary software.
 
-### Introduction to OpenLANE and Strive Chipsets
-#### What is OpenLANE?
+##### Introduction to OpenLANE and Strive Chipsets
+###### What is OpenLANE?
 OpenLANE is an open-source ASIC design flow developed by efabless, built on tools like:
 
 Yosys – Logic synthesis.
@@ -114,8 +115,8 @@ Fault – DRC rule checking.
 Strive Chipsets
 Strive chipsets are RISC-V based open-source designs developed using OpenLANE, demonstrating a fully open-source ASIC implementation.
 
-### Introduction to OpenLANE Detailed ASIC Design Flow
-#### In-Depth OpenLANE Flow
+##### Introduction to OpenLANE Detailed ASIC Design Flow
+###### In-Depth OpenLANE Flow
 The OpenLANE flow automates the ASIC design process from RTL to GDSII, integrating multiple open-source EDA tools.
 
 Detailed Step-by-Step Flow:
@@ -149,10 +150,12 @@ Fully customizable – Allows modification of standard libraries.
 Enables innovation – Ideal for startups, universities, and research labs.
 Compatible with SkyWater 130nm PDK – A free process design kit (PDK) for real chip manufacturing.
 
-## Section 1 Labs
+### Section 1 Lab's Tasks
 
-### Run "picorav32a" synthesis using OpenLane and generat output
+##### 1.Run "picorav32a" synthesis using OpenLane and generat output
+##### 2. Calculate flop ration
 
+###### 1. Run "picorav32a" synsthesis using OpenLane and generat output
 1. Go to Openlane Directory
 
 ```bash
@@ -189,6 +192,37 @@ Screenshots of every Lab activities
 ![lab 2](https://github.com/user-attachments/assets/b2db4aaa-becd-4283-aadc-70797e5872ff)
 
 ![lab (3)](https://github.com/user-attachments/assets/d9a18f0b-2541-4c96-8608-c0f3d8ca1ab7)
+
+
+###### 2. Calculate flop ratio
+
+```math
+Flop\ Ratio = \frac{Number\ of\ D\ Flip\ Flops}{Total\ Number\ of\ Cells}
+```
+```math
+Percentage\ of\ D Flip Flops's = Flop\ Ratio * 100
+```
+
+####### D flip Flop
+
+![Screenshot (73)](https://github.com/user-attachments/assets/1ee559b6-1764-4f0f-aabb-9992b55eaa7a)
+
+
+####### Total numbers of cells
+
+![Screenshot (74)](https://github.com/user-attachments/assets/60ccc161-579a-4783-84c1-52024d123e84)
+
+Calculation of Flop Ratio and D Flip Flop's %
+
+```math
+Flop\ Ratio = \frac{1613}{14876} = 0.1084296853993009
+```
+```math
+Percentage\ of\ D Flip Flops's = 0.1084296853993009 * 100 = 10.84296853993009\ \%
+```
+
+### Section 2
+
 
 
 
