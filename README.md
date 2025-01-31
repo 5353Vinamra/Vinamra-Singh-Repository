@@ -356,6 +356,7 @@ run_synthesis
 
 # Now we can run floorplan
 run_floorplan
+```
 
 Screenshots of running floorplan
 
