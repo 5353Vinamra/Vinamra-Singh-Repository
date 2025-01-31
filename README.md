@@ -1,3 +1,6 @@
+![Screenshot (72)](https://github.com/user-attachments/assets/b61628e0-2a76-4cf4-afbc-f6f7e96c779e)
+![lab 2](https://github.com/user-attachments/assets/1bd2a40a-d9f1-4f40-8e60-d035f5069bfa)
+![Lab 1](https://github.com/user-attachments/assets/f37eb4d6-8c4b-4518-97bd-b7d0984955a4)
 # Vinamra-Singh-Repository
 ## Brief Overview
 ### Section 1
@@ -181,9 +184,14 @@ run_synthesis
 
 ```
 
+Screenshots of every Lab activities
 
 
+![lab 1](https://github.com/user-attachments/assets/c0a3f513-27d5-4f07-979b-7ea50f667e4f)
 
+![lab 2](https://github.com/user-attachments/assets/b2db4aaa-becd-4283-aadc-70797e5872ff)
+
+![lab (3)](https://github.com/user-attachments/assets/d9a18f0b-2541-4c96-8608-c0f3d8ca1ab7)
 
 
 
