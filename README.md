@@ -1,4 +1,4 @@
-# Vinamra-Singh-Repository
+# Vinamra-Singh Repository 
 ## Advanced Physical Design Using OpenLane/Sky130
 ### Section 1 Inception of open-source EDA, OpenLANE and Sky130 PDK
 #### Brief Overview
