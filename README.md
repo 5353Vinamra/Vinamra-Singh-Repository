@@ -867,180 +867,189 @@ Screenshot of magic window with rule implemented
 
 ### Brief Overview
 
-### Section 4 labs
+Introduction to Timing Libraries and Steps to Include New Cells in Synthesis
+Timing libraries, also known as Liberty (.lib) files, contain information about standard cells, including delay, power, and functionality. These libraries are crucial for the synthesis and timing analysis of a digital design.
+When adding a new cell to synthesis, several steps need to be followed:
 
-* Section 4 tasks:-
-1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
-2. Save the finalized layout with custom name and open it.
-3. Generate lef from the layout.
-4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
-5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
-6. Run openlane flow synthesis with newly inserted custom inverter cell.
-7. Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters.
-8. Once synthesis has accepted our custom inverter we can now run floorplan and placement and verify the cell is accepted in PnR flow.
-9. Do Post-Synthesis timing analysis with OpenSTA tool.
-10. Make timing ECO fixes to remove all violations.
-11. Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
-12. Post-CTS OpenROAD timing analysis.
-13. Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
+Characterizing the cell for different process, voltage, and temperature (PVT) conditions.
+Extracting timing information using SPICE simulations.
+Generating a .lib file with accurate delay and power values.
+Integrating the .lib file into the synthesis tool to ensure proper usage in the design.
+Running synthesis and place-and-route to verify timing closure.
+Introduction to Delay Tables
+Delay tables define how the delay of a logic gate varies based on input transition time and output load capacitance. These tables allow synthesis and timing tools to estimate the propagation delay of signals through different paths in the circuit.
 
-* Section 4 - Tasks 1 to 4 files, reports and logs can be found in the following folder:
+Different types of delay models include:
 
-[Section 4 - Tasks 1 to 4 \(vsdstdcelldesign\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign)
+Linear Delay Model (LDM): Simplified model assuming a linear relationship between delay and load.
+Non-Linear Delay Model (NLDM): More accurate, using lookup tables based on input transition time and output load.
+Composite Current Source (CCS): Uses current waveforms to model gate behavior more precisely.
+Effective Current Source Model (ECSM): Similar to CCS but includes power modeling.
+Delay Table Usage Part 1
+Delay tables are used during timing analysis to predict how long a signal takes to propagate through a gate under different conditions. These tables help in:
 
-* Section 4 - Task 4 files, reports and logs can be found in the following folder:
+Synthesis: Choosing the best standard cell for optimization.
+Static Timing Analysis (STA): Checking if the circuit meets setup and hold timing requirements.
+Place and Route (P&R): Ensuring that routing does not introduce excessive delay.
+Each standard cell in the library has a delay table that is indexed by input transition time and output capacitance.
 
-[Section 4 - Task 4 \(src\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src)
+Delay Table Usage Part 2
+Advanced usage of delay tables involves:
 
-* Section 4 - Task 5 files, reports and logs can be found in the following folder:
+Interpolating values between given points in the table to estimate delay more accurately.
+Accounting for voltage and temperature variations that affect delay.
+Handling signal integrity issues such as noise, crosstalk, and glitches.
+Using advanced delay models like CCS and ECSM for better accuracy in modern designs.
+Setup Timing Analysis and Introduction to Flip-Flop Setup Time
+Setup time is the minimum time before the clock edge when data must be stable for a flip-flop to correctly capture it. Violating the setup time leads to setup violations, which result in incorrect data being latched.
 
-[Section 4 - Task 5 \(picorv32a\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a)
+Steps in setup timing analysis:
 
-* Section 4 - Tasks 6 to 8 & 11 to 13 logs, reports and results can be found in following run folder:
+Extract setup timing constraints from the timing library.
+Calculate clock arrival time and data arrival time.
+Check if the data arrives before the required setup time.
+Apply timing fixes like buffer insertion, gate sizing, or register retiming if violations occur.
+Introduction to Clock Jitter and Uncertainty
+Clock jitter is the variation in the arrival time of the clock edges due to noise, power supply variations, and process variations. It affects the timing margin of the design and can lead to setup or hold violations.
 
-[Section 4 - Tasks 6 to 8 & 11 to 13 Run \(24-03_10-03\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/24-03_10-03)
+Types of clock jitter:
 
-* Section 4 - Tasks 9 to 11 logs, reports and results can be found in following run folder:
+Cycle-to-cycle jitter: Variation between consecutive clock cycles.
+Long-term jitter: Accumulated variation over multiple cycles.
+Phase jitter: Deviation of the clock phase from the ideal timing.
+Clock uncertainty is the additional timing margin added to account for jitter and other timing variations. It helps ensure robustness in real-world scenarios.
 
-[Section 4 - Tasks 9 to 11 Run \(25-03_18-52\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_18-52)
+Clock Tree Routing and Buffering Using H-Tree Algorithm
+Clock tree routing is the process of distributing the clock signal throughout the chip while minimizing clock skew. The H-Tree algorithm is one of the most commonly used techniques for this.
 
-#### 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+Steps in H-Tree clock distribution:
 
-Conditions to be verified before moving forward with custom designed cell layout:
-* Condition 1: The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks.
-* Condition 2: Width of the standard cell should be odd multiples of the horizontal track pitch.
-* Condition 3: Height of the standard cell should be even multiples of the vertical track pitch.
+Divide the design into quadrants and distribute the clock symmetrically.
+Place buffers at branching points to strengthen the clock signal.
+Ensure that all paths have equal delays to minimize skew.
+Perform timing optimization to reduce power consumption and improve clock synchronization.
+The advantage of the H-Tree method is its symmetry, which ensures uniform delays across the chip, making it ideal for high-speed designs.
 
-Commands to open the custom inverter layout
+Crosstalk and Clock Net Shielding
+Crosstalk occurs when signals in adjacent wires interfere due to capacitive and inductive coupling. This can lead to unwanted noise, timing violations, and glitches.
 
-```bash
-# Change directory to vsdstdcelldesign
-cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+Methods to reduce crosstalk:
 
-# Command to open custom inverter layout in magic
-magic -T sky130A.tech sky130_inv.mag &
-```
+Increase spacing between critical nets.
+Use shielding layers (ground or power lines) around clock nets to reduce interference.
+Route high-speed signals on separate metal layers.
+Optimize wire width and spacing in the place-and-route stage.
+Clock net shielding is particularly important because clock signals have strict timing requirements and cannot tolerate variations caused by crosstalk.
 
-Screenshot of tracks.info of sky130_fd_sc_hd
+Setup Timing Analysis Using Real Clocks
+Setup timing analysis with real clocks accounts for actual clock propagation delays, jitter, and routing effects. This is done after clock tree synthesis (CTS) to ensure that the real clock arrival times are considered in the timing calculations.
 
-![Screenshot from 2024-03-24 13-38-09](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/2a35eb22-dd5f-4b67-9712-cbd2a84b526a)
+Key considerations:
 
-Commands for tkcon window to set grid as tracks of locali layer
+Clock skew: Difference in clock arrival times at different flip-flops.
+Clock uncertainty: Additional margin for variations.
+Clock buffers and delays: Impact on timing paths.
+By using real clock delays, setup analysis becomes more accurate, helping to identify timing violations that might not appear in an idealized pre-layout analysis.
 
-```tcl
-# Get syntax for grid command
-help grid
+Hold Timing Analysis Using Real Clocks
+Hold timing analysis ensures that data remains stable for a minimum period after the clock edge to avoid incorrect latching. If the data changes too soon, a hold time violation occurs.
 
-# Set grid values accordingly
-grid 0.46um 0.34um 0.23um 0.17um
-```
+Steps in hold timing analysis:
 
-Screenshot of commands run
+Determine actual clock arrival times after clock tree synthesis.
+Check if the data remains stable for the required hold time after the clock edge.
+Analyze hold margin considering real clock delays and routing effects.
+Fix hold violations by adding buffers or delaying the clock signal at certain points.
+Hold timing violations are particularly challenging because they cannot be fixed by simply increasing the clock period. Instead, adjustments must be made at the circuit level.
 
-![Screenshot from 2024-03-24 13-49-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d0d9c106-4e05-4e73-a7ed-3f718cb69b42)
+### Section 5
+ 
+Introduction to Maze Routing – Lee’s Algorithm
+Maze routing is a pathfinding algorithm used in VLSI design to find an optimal connection between two points in a circuit. Lee’s Algorithm is a classic maze-routing method that guarantees finding the shortest path if one exists.
 
-Condition 1 verified
+Steps of Lee’s Algorithm:
 
-![Screenshot from 2024-03-24 13-51-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/b74b31c8-cdc7-4dcb-9467-5a1787bfa5fe)
+Grid Representation: The circuit layout is divided into a grid where obstacles are marked as blocked.
+Breadth-First Expansion: Starting from the source, neighboring cells are assigned increasing distance values.
+Backtracking for Path Extraction: Once the destination is reached, the shortest path is traced back by following the decreasing values.
+Optimization: The route is smoothed to avoid unnecessary detours.
+Advantages:
 
-Condition 2 verified
+Guarantees finding a path if one exists.
+Finds the shortest path.
+Disadvantages:
 
-```math
-Horizontal\ track\ pitch = 0.46\ um
-```
+High memory and runtime complexity for large designs.
+Lee’s Algorithm Conclusion
+Lee’s Algorithm is useful in small routing problems but becomes computationally expensive for larger circuits. It forms the foundation for modern routing algorithms like A search and pattern-based routing*. Enhancements such as rip-up and re-route, hierarchical routing, and multi-layer routing improve its efficiency for real-world VLSI applications.
 
-![Screenshot from 2024-03-24 13-55-07](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e045e5b6-3592-4242-995d-de2049438ec5)
+Design Rule Check (DRC)
+Design Rule Check (DRC) ensures that the physical layout of a circuit follows manufacturing constraints. These rules prevent defects and improve yield.
 
-```math
-Width\ of\ standard\ cell = 1.38\ um = 0.46 * 3
-```
+Common DRC Rules:
 
-Condition 3 verified
+Width Rules: Minimum width for metal traces to ensure manufacturability.
+Spacing Rules: Minimum distance between wires to prevent short circuits.
+Enclosure Rules: Via enclosures must have sufficient overlap.
+Antenna Rules: Prevent damage due to charge accumulation during fabrication.
+DRC is performed using tools like Magic, Calibre, or TritonRoute to identify violations and correct them before fabrication.
 
-```math
-Vertical\ track\ pitch = 0.34\ um
-```
+Basics of Global and Detail Routing and Configuring TritonRoute
+Routing is divided into global routing and detailed routing:
 
-![Screenshot from 2024-03-24 13-58-32](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/a471b022-91ac-466a-8dd9-72b90f9c16c1)
+Global Routing:
 
-```math
-Height\ of\ standard\ cell = 2.72\ um = 0.34 * 8
-```
+Divides the layout into coarse routing regions.
+Determines approximate paths for interconnects.
+Ensures congestion is minimized.
+Tools: FastRoute, TritonRoute.
+Detailed Routing:
 
-#### 2. Save the finalized layout with custom name and open it.
+Assigns exact tracks and vias for interconnections.
+Ensures compliance with DRC rules.
+Uses advanced techniques like rip-up and re-route, layer assignment, and via optimization.
+Tools: TritonRoute, NanoRoute.
+Configuring TritonRoute:
 
-Command for tkcon window to save the layout with custom name
+Define routing constraints such as metal layer usage and design rules.
+Provide pre-processed route guides for guided routing.
+Run TritonRoute to generate a legal routed design.
+TritonRoute Feature 1 - Honors Pre-Processed Route Guides
+TritonRoute follows pre-generated route guides to ensure optimal routing and avoid congestion.
 
-```tcl
-# Command to save as
-save sky130_vsdinv.mag
-```
+How it works:
 
-Command to open the newly saved layout
+Route guides are generated during global routing.
+TritonRoute uses these guides to create an initial routing solution.
+Prevents excessive detouring and improves routing efficiency.
+This feature helps in achieving DRC-clean routing without excessive iterations.
 
-```bash
-# Command to open custom inverter layout in magic
-magic -T sky130A.tech sky130_vsdinv.mag &
-```
+TritonRoute Feature 2 & 3 - Inter-Guide Connectivity and Intra- & Inter-Layer Routing
+Inter-guide connectivity ensures smooth transitions between different routing guides.
+Intra-layer routing assigns tracks within the same metal layer.
+Inter-layer routing optimizes via placement and layer transitions to reduce congestion.
+TritonRoute intelligently adjusts routing paths to maintain connectivity while minimizing resistance and delay.
 
-Screenshot of newly saved layout
+TritonRoute Method to Handle Connectivity
+TritonRoute ensures that all signal and power nets are correctly connected using techniques like:
 
-![Screenshot from 2024-03-24 14-33-20](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/0beb4300-2ebc-4364-8e3d-37fdb6d52f5b)
+Layer-based optimization: Choosing the best layer for each wire.
+Short-path correction: Ensuring the shortest feasible path is taken.
+Dynamic rerouting: Adjusting paths dynamically to resolve conflicts.
+Antenna effect mitigation: Handling long wires to prevent charge buildup.
+Routing Topology Algorithm and Final Files List Post-Route
+After routing, TritonRoute generates files that describe the final layout:
 
-#### 3. Generate lef from the layout.
+DEF (Design Exchange Format): Stores placement and routing details.
+GDS (Graphic Database System): Contains mask layout data for fabrication.
+LEF (Library Exchange Format): Provides technology and standard cell info.
+DRC Reports: Lists any violations that need correction.
+The routing topology algorithm optimizes interconnects by:
 
-Command for tkcon window to write lef
+Choosing efficient routing paths to reduce wirelength.
+Minimizing via usage to improve reliability.
+Ensuring manufacturability by following design rules.
 
-```tcl
-# lef command
-lef write
-```
+## Thanks for this opportunity I can make it till Day 3 only and explanation of day 4 and 5, I always wanted to learn something new and this course made me do it. Hope you will like it
 
-Screenshot of command run
-
-![Screenshot from 2024-03-24 14-35-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/6928c3dc-e633-414d-9ac1-71349cad4b9b)
-
-Screenshot of newly created lef file
-
-![Screenshot from 2024-03-24 14-37-19](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/15557990-33b4-4402-8c72-39b75da9ed07)
-
-#### 4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
-
-Commands to copy necessary files to 'picorv32a' design 'src' directory
-
-```bash
-# Copy lef file
-cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
-
-# List and check whether it's copied
-ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
-
-# Copy lib files
-cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
-
-# List and check whether it's copied
-ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
-```
-
-Screenshot of commands run
-
-![Screenshot from 2024-03-24 14-55-23](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/78559cee-ad3f-4301-83ae-df99f8417be3)
-
-#### 5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
-
-Commands to be added to config.tcl to include our custom cell in the openlane flow
-
-```tcl
-set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
-set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
-set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
-set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
-
-set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
-```
-
-Edited config.tcl to include the added lef and change library to ones we added in src directory
-
-![Screenshot from 2024-03-24 15-29-56](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/7b18f216-1160-4a65-91fd-998495ad3175)
-
-##Thanks I can do it till here only, thankyou for this oportunity I always wanted to know more in field of computer science and this coures made me do it 😊
+# END
