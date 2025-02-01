@@ -544,6 +544,7 @@ The CMOS fabrication process focuses on creating the physical structure of the t
 3. Make a spice file of the inverter 
 4. Edit the spice file
 5. Run spice file for ngspice simulations
+6. fix error in poly.9
 
 
 ```bash
@@ -732,20 +733,314 @@ Fall\ Cell\ Delay = Time\ taken\ for\ output\ to\ fall\ to\ 50\% - Time\ taken\ 
 Fall\ Cell\ Delay = 4.07 - 4.05 = 0.02\ ns = 20\ ps
 ```
 
+6. Fix error in poly.9
+
+```bash
+# Change to home directory
+cd
+
+# Command to download the lab files
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+# Since lab file is compressed command to extract it
+tar xfz drc_tests.tgz
+
+# Change directory into the lab folder
+cd drc_tests
+
+# List all files and directories present in the current directory
+ls -al
+
+# Command to view .magicrc file
+gvim .magicrc
+
+# Command to open magic tool
+magic -d XR &
+```
+Screenshot of running these commands
+
+![Screenshot (125)](https://github.com/user-attachments/assets/7f9ee64d-53d4-4b75-97c3-27acbcfbd7f9)
+![Screenshot (126)](https://github.com/user-attachments/assets/c3aa9dc9-59f3-455d-8415-9130dbab4531)
+
+Screenshot of .magicrc file opened in GVim
+
+![Screenshot (127)](https://github.com/user-attachments/assets/f93747c3-5f19-4e46-b26d-5863da35b932)
+
+Fixing error in poly.9
+
+poly rules
+![Screenshot (132)](https://github.com/user-attachments/assets/7930262e-e7cb-4c88-abef-dc92de5432d9)
+
+incorrect spacing
+
+![Screenshot (136)](https://github.com/user-attachments/assets/48fe26fc-3f53-4424-801f-a6ad17333e39)
 
 
+Changes in sky130A.tech file
 
+![Screenshot (133)](https://github.com/user-attachments/assets/2f20feba-70c0-4a6e-af4a-0ef327d96f07)
+![Screenshot (134)](https://github.com/user-attachments/assets/935e8c46-57aa-46db-bab8-874219122d9f)
 
+```bash
+# Loading updated tech file
+tech load sky130A.tech
 
+# Must re-run drc check to see updated drc errors
+drc check
 
+# Selecting region displaying the new errors and getting the error messages 
+drc why
+```
 
+Screenshot of magic window with rule implemented
 
+![Screenshot from 2024-03-21 23-13-11](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/b18e8e07-ef0f-40fb-9b6d-8aae878a23c6)
+![Screenshot from 2024-03-22 00-00-40](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d5afe8d8-691b-485d-a89a-8f901e18b56e)
 
+**Incorrectly implemented difftap.2 simple rule correction**
 
+Screenshot of difftap rules
 
+![Screenshot from 2024-03-22 00-14-47](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/086b7a66-b60a-470a-b5c0-a5ac938ebec3)
 
+Incorrectly implemented difftap.2 rule no drc violation even though spacing < 0.42u
 
+![Screenshot from 2024-03-22 00-14-36](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/a2d0d739-2df5-4eb5-ab78-c80d366e24e4)
 
+New commands inserted in sky130A.tech file to update drc
 
+![Screenshot from 2024-03-22 00-26-43](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/b5892f9b-9c5d-4b1b-baa2-6fe45f3965b1)
 
+Commands to run in tkcon window
 
+```tcl
+# Loading updated tech file
+tech load sky130A.tech
+
+# Must re-run drc check to see updated drc errors
+drc check
+
+# Selecting region displaying the new errors and getting the error messages 
+drc why
+```
+
+Screenshot of magic window with rule implemented
+
+![Screenshot from 2024-03-22 00-29-22](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/a3f92160-6701-48fb-b6cf-e4c41dc4a531)
+
+**Incorrectly implemented nwell.4 complex rule correction**
+
+Screenshot of nwell rules
+
+![Screenshot from 2024-03-22 00-51-34](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/4ad4901d-0b9a-4339-89e3-7bb3fce2766d)
+
+Incorrectly implemented nwell.4 rule no drc violation even though no tap present in nwell
+
+![Screenshot from 2024-03-22 00-52-51](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/87da8944-0ad8-455d-97ec-3909eac656c3)
+
+New commands inserted in sky130A.tech file to update drc
+
+![Screenshot from 2024-03-22 01-03-42](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/886c6930-6314-4a6f-97d9-6b8423444ac0)
+![Screenshot from 2024-03-22 01-04-04](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d9808e9a-42c2-4421-9b82-2ef65a5a1ad7)
+
+Commands to run in tkcon window
+
+```tcl
+# Loading updated tech file
+tech load sky130A.tech
+
+# Change drc style to drc full
+drc style drc(full)
+
+# Must re-run drc check to see updated drc errors
+drc check
+
+# Selecting region displaying the new errors and getting the error messages 
+drc why
+```
+
+Screenshot of magic window with rule implemented
+
+![Screenshot from 2024-03-22 01-10-25](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/49b1004d-f860-4ca7-86f4-4d79784a01cf)
+
+## Section 4 - Pre-layout timing analysis and importance of good clock tree
+
+### Brief Overview
+
+### Section 4 labs
+
+* Section 4 tasks:-
+1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+2. Save the finalized layout with custom name and open it.
+3. Generate lef from the layout.
+4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
+5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
+6. Run openlane flow synthesis with newly inserted custom inverter cell.
+7. Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters.
+8. Once synthesis has accepted our custom inverter we can now run floorplan and placement and verify the cell is accepted in PnR flow.
+9. Do Post-Synthesis timing analysis with OpenSTA tool.
+10. Make timing ECO fixes to remove all violations.
+11. Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
+12. Post-CTS OpenROAD timing analysis.
+13. Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
+
+* Section 4 - Tasks 1 to 4 files, reports and logs can be found in the following folder:
+
+[Section 4 - Tasks 1 to 4 \(vsdstdcelldesign\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign)
+
+* Section 4 - Task 4 files, reports and logs can be found in the following folder:
+
+[Section 4 - Task 4 \(src\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src)
+
+* Section 4 - Task 5 files, reports and logs can be found in the following folder:
+
+[Section 4 - Task 5 \(picorv32a\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a)
+
+* Section 4 - Tasks 6 to 8 & 11 to 13 logs, reports and results can be found in following run folder:
+
+[Section 4 - Tasks 6 to 8 & 11 to 13 Run \(24-03_10-03\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/24-03_10-03)
+
+* Section 4 - Tasks 9 to 11 logs, reports and results can be found in following run folder:
+
+[Section 4 - Tasks 9 to 11 Run \(25-03_18-52\)](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/tree/main/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_18-52)
+
+#### 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+
+Conditions to be verified before moving forward with custom designed cell layout:
+* Condition 1: The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks.
+* Condition 2: Width of the standard cell should be odd multiples of the horizontal track pitch.
+* Condition 3: Height of the standard cell should be even multiples of the vertical track pitch.
+
+Commands to open the custom inverter layout
+
+```bash
+# Change directory to vsdstdcelldesign
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+Screenshot of tracks.info of sky130_fd_sc_hd
+
+![Screenshot from 2024-03-24 13-38-09](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/2a35eb22-dd5f-4b67-9712-cbd2a84b526a)
+
+Commands for tkcon window to set grid as tracks of locali layer
+
+```tcl
+# Get syntax for grid command
+help grid
+
+# Set grid values accordingly
+grid 0.46um 0.34um 0.23um 0.17um
+```
+
+Screenshot of commands run
+
+![Screenshot from 2024-03-24 13-49-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d0d9c106-4e05-4e73-a7ed-3f718cb69b42)
+
+Condition 1 verified
+
+![Screenshot from 2024-03-24 13-51-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/b74b31c8-cdc7-4dcb-9467-5a1787bfa5fe)
+
+Condition 2 verified
+
+```math
+Horizontal\ track\ pitch = 0.46\ um
+```
+
+![Screenshot from 2024-03-24 13-55-07](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e045e5b6-3592-4242-995d-de2049438ec5)
+
+```math
+Width\ of\ standard\ cell = 1.38\ um = 0.46 * 3
+```
+
+Condition 3 verified
+
+```math
+Vertical\ track\ pitch = 0.34\ um
+```
+
+![Screenshot from 2024-03-24 13-58-32](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/a471b022-91ac-466a-8dd9-72b90f9c16c1)
+
+```math
+Height\ of\ standard\ cell = 2.72\ um = 0.34 * 8
+```
+
+#### 2. Save the finalized layout with custom name and open it.
+
+Command for tkcon window to save the layout with custom name
+
+```tcl
+# Command to save as
+save sky130_vsdinv.mag
+```
+
+Command to open the newly saved layout
+
+```bash
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_vsdinv.mag &
+```
+
+Screenshot of newly saved layout
+
+![Screenshot from 2024-03-24 14-33-20](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/0beb4300-2ebc-4364-8e3d-37fdb6d52f5b)
+
+#### 3. Generate lef from the layout.
+
+Command for tkcon window to write lef
+
+```tcl
+# lef command
+lef write
+```
+
+Screenshot of command run
+
+![Screenshot from 2024-03-24 14-35-55](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/6928c3dc-e633-414d-9ac1-71349cad4b9b)
+
+Screenshot of newly created lef file
+
+![Screenshot from 2024-03-24 14-37-19](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/15557990-33b4-4402-8c72-39b75da9ed07)
+
+#### 4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
+
+Commands to copy necessary files to 'picorv32a' design 'src' directory
+
+```bash
+# Copy lef file
+cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# List and check whether it's copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# Copy lib files
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# List and check whether it's copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+
+Screenshot of commands run
+
+![Screenshot from 2024-03-24 14-55-23](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/78559cee-ad3f-4301-83ae-df99f8417be3)
+
+#### 5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
+
+Commands to be added to config.tcl to include our custom cell in the openlane flow
+
+```tcl
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+
+Edited config.tcl to include the added lef and change library to ones we added in src directory
+
+![Screenshot from 2024-03-24 15-29-56](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/7b18f216-1160-4a65-91fd-998495ad3175)
+
+##Thanks I can do it till here only, thankyou for this oportunity I always wanted to know more in field of computer science and this coures made me do it 😊
