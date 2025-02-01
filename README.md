@@ -184,7 +184,7 @@ run_synthesis
 
 ```
 
-Screenshots of every Lab activities
+Screenshots
 
 
 ![lab 1](https://github.com/user-attachments/assets/c0a3f513-27d5-4f07-979b-7ea50f667e4f)
@@ -369,7 +369,7 @@ Screenshots of running floorplan
 
 2. Calculate die area
 
-Screenshot of things Floorplan
+Screenshot of contents in Floorplan
 
 ![Screenshot (77)](https://github.com/user-attachments/assets/43bd6cff-2b57-453d-8476-4286995ec938)
 
@@ -401,7 +401,7 @@ Commands to run floorplan in magic
 
 ```bash
 # Change directory to floorplan
-cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/floorplan/
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/01-02_05-07/results/floorplan/
 
 # Command to run the floorplan in magic tool
 magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
@@ -424,6 +424,61 @@ Unplaced cells
 
 ![Screenshot (81)](https://github.com/user-attachments/assets/5a9f55e8-3e60-46df-a0ce-7b5e3ae57044)
 ![Screenshot (82)](https://github.com/user-attachments/assets/0aea2e0d-df40-4cbb-9b88-92c8af4df95a)
+
+4.Run 'picorv32a' design placement using OpenLANE flow and get the output.
+
+```bash
+#So some cells are unplaced in the floorplan and to place them we use this command
+
+run_placement
+```
+
+Screenshots of running placement in terminal
+
+![Screenshot (85)](https://github.com/user-attachments/assets/7cf86d5b-3d23-4f7e-bc12-d667a7caad96)
+
+![Screenshot (84)](https://github.com/user-attachments/assets/5f4be562-d801-41b5-9975-7098560b3d53)
+
+Screenshots of floorplan after running placement
+
+```bash
+#change the directory to placement
+Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/01-02_05-07/results/placement
+
+#Command to Run placement in magic
+
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+```
+![Screenshot (86)](https://github.com/user-attachments/assets/8a57197a-e850-4355-999f-141634b3b1af)
+![Screenshot (87)](https://github.com/user-attachments/assets/05b2e1c3-c2a6-463c-b813-64db666090d4)
+
+
+Screenshot of legally placed cells
+
+![Screenshot (88)](https://github.com/user-attachments/assets/dd4da2a8-3edb-4a18-98a9-ea9dc41a51f6)
+![Screenshot (89)](https://github.com/user-attachments/assets/ff32ca39-b2e5-467b-bbe5-800657501b6e)
+
+Screenshots Of exploring floorplan after running placement
+
+![Screenshot (90)](https://github.com/user-attachments/assets/5a7af879-43e3-40b4-9920-012f2a315a11)
+![Screenshot (91)](https://github.com/user-attachments/assets/1dd03d68-46cf-40b7-878e-6d142c1a7117)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
