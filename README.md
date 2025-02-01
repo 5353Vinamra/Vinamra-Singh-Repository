@@ -150,7 +150,7 @@ Fully customizable – Allows modification of standard libraries.
 Enables innovation – Ideal for startups, universities, and research labs.
 Compatible with SkyWater 130nm PDK – A free process design kit (PDK) for real chip manufacturing.
 
-#### Section 1 Lab Tasks
+#### Section 1 Tasks
 
 1. Run "picorav32a" synthesis using OpenLane and generat output
 2. Calculate flop ration
@@ -321,7 +321,7 @@ tPLH (Propagation delay, low-to-high output): The delay from the input signal ch
 tPHL (Propagation delay, high-to-low output): The delay from the input signal changing from high to low to the output signal changing from high to low.
 Transition Time refers to the time it takes for a signal to change between its logic levels (high and low). It is often defined as the time it takes for a signal to move from 10% to 90% of its final voltage value (or vice versa). Transition time affects the speed at which signals propagate and can influence the overall speed of the circuit. Faster transitions are preferred to reduce the delay and improve the overall performance of the design.
 
-#### Section 2 Lab Tasks
+#### Section 2 Tasks
 
 1. Run 'picorv32a' floorplan using OpenLANE flow and get the Output
 2. Calculate die area
@@ -435,6 +435,8 @@ run_placement
 
 Screenshots of running placement in terminal
 
+![Screenshot (92)](https://github.com/user-attachments/assets/491277fd-31cf-4d78-a140-1f79dad71e42)
+
 ![Screenshot (85)](https://github.com/user-attachments/assets/7cf86d5b-3d23-4f7e-bc12-d667a7caad96)
 
 ![Screenshot (84)](https://github.com/user-attachments/assets/5f4be562-d801-41b5-9975-7098560b3d53)
@@ -463,6 +465,81 @@ Screenshots Of exploring floorplan after running placement
 
 ![Screenshot (90)](https://github.com/user-attachments/assets/5a7af879-43e3-40b4-9920-012f2a315a11)
 ![Screenshot (91)](https://github.com/user-attachments/assets/1dd03d68-46cf-40b7-878e-6d142c1a7117)
+
+
+### Section 3 Design library cell using Magic Layout and ngspice characterization
+#### Brief Overview
+
+##### CMOS Inverter and SPICE Simulation:
+SPICE Deck Creation for CMOS Inverter:
+
+SPICE (Simulation Program with Integrated Circuit Emphasis) is a widely used tool for simulating electrical circuits, and a SPICE deck refers to the set of input files that define the components and their behavior.
+CMOS Inverter: A basic CMOS inverter consists of an NMOS (N-type Metal-Oxide-Semiconductor) and PMOS (P-type Metal-Oxide-Semiconductor) transistor. The SPICE deck for this circuit includes the transistor models, voltage sources, and netlist definitions that describe how the CMOS inverter should behave in a simulation environment.
+In this step, you define all the parameters (threshold voltages, channel lengths, etc.) of the NMOS and PMOS transistors and set up the necessary simulation conditions (e.g., input signals and output response).
+
+SPICE Simulation Lab for CMOS Inverter:
+
+This step involves running the SPICE simulation for the CMOS inverter. You simulate how the circuit behaves under different conditions (e.g., input voltages) and observe the output (in terms of voltage).
+The goal is to understand the static and dynamic behavior of the inverter, including its switching characteristics, delays, and energy consumption. You may analyze the rise time, fall time, propagation delay, and other performance metrics.
+
+Switching Threshold Vm:
+
+The switching threshold (Vm) refers to the input voltage level at which the output voltage of the inverter transitions from logic 0 to logic 1 (or vice versa).
+The inverter switches between high and low output levels depending on the input voltage. Vm is the input voltage at which the inverter output changes states, and it typically lies between the threshold voltages of the NMOS and PMOS transistors.
+This voltage is critical for ensuring that the CMOS inverter operates as a proper logic gate, transitioning cleanly between the two states.
+
+Static and Dynamic Simulation of CMOS Inverter:
+
+Static Simulation focuses on the behavior of the CMOS inverter at steady-state conditions, such as the logic 0 and logic 1 states.
+Dynamic Simulation simulates the inverter's behavior when switching between these states, typically involving time-dependent analysis to evaluate performance factors like switching time, power consumption, and transition delays.
+CMOS Fabrication Process:
+
+Create Active Regions:
+
+The active regions of a CMOS device are the areas where the transistor channels (source, drain, and gate regions) are formed. These regions are where the actual transistor action occurs (i.e., where current flows when the transistor is turned on).
+Creating active regions typically involves oxidation and photolithography processes, where regions of the silicon wafer are defined to later form NMOS and PMOS devices.
+
+Formation of N-Well and P-Well:
+
+N-well and P-well are the regions in which the PMOS and NMOS transistors are formed, respectively.
+N-well: A region of P-type silicon where NMOS transistors are implanted.
+P-well: A region of N-type silicon where PMOS transistors are implanted.
+These wells are created by the process of dopant implantation during the fabrication process to ensure that the proper charge carriers are available for each type of transistor.
+
+Formation of Gate Terminal:
+
+The gate terminal is formed by creating a thin layer of polycrystalline silicon (polysilicon) over the active regions. This polysilicon layer will act as the gate electrode that controls the flow of current between the source and drain terminals of the transistor.
+The gate is separated from the active region by a thin layer of silicon dioxide (SiO2), which acts as the gate oxide.
+
+Lightly Doped Drain (LDD) Formation:
+
+LDD (Lightly Doped Drain) is a process that helps reduce short-channel effects (where the gate control over the channel is weakened due to small transistor sizes).
+LDD involves implanting a light dose of dopants (usually phosphorous or boron) into the source and drain regions, creating a more gradual doping profile near the channel. This reduces the electric field and improves the transistor’s performance, especially for scaled-down technologies.
+
+Source-Drain Formation:
+
+The source and drain are the two terminals of the transistor where the current flows. These regions are highly doped to create N-type or P-type conductivity, depending on whether the transistor is an NMOS or PMOS.
+Source-Drain formation is done by implanting the appropriate dopants into the active regions (N-well or P-well) to create the two regions that will allow current to flow when the transistor is turned on.
+
+Local Interconnect Formation:
+
+Local interconnects refer to the metal or polysilicon layers that connect individual components (such as transistors) within the chip. These interconnects form the wiring that connects the different gates and sources/drains.
+The interconnect layers are formed after the source-drain and gate regions are created, usually by deposition and etching processes.
+
+Higher Level Metal Formation:
+
+After the local interconnects, higher-level metal layers (M1, M2, M3, etc.) are created to establish long-range connections between different parts of the chip.
+These higher-level metal layers are typically formed using copper or aluminum and are essential for creating connections between various blocks of the chip, ensuring that the components can communicate and work together effectively.
+
+Summary:
+
+SPICE Simulation steps help in understanding and evaluating the behavior of the CMOS inverter, including its switching thresholds and performance under various conditions.
+
+The CMOS fabrication process focuses on creating the physical structure of the transistor by forming the active regions, creating the wells, defining the gate, and forming the source-drain terminals. Various process steps like LDD formation, interconnect creation, and higher-level metal layers ensure that the transistor operates efficiently and connects to the rest of the circuit.
+
+#### Section 3 Lab tasks
+
+1.
 
 
 
