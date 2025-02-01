@@ -541,6 +541,9 @@ The CMOS fabrication process focuses on creating the physical structure of the t
 
 1.Clone the web URL in vsdstdcelldesign and copy the file to vsdstdcelldesign directory
 2. Open the inverter in magic and explore
+3. Make a spice file of the inverter 
+4. Edit the spice file
+5. Run spice file for ngspice simulations
 
 
 ```bash
@@ -601,7 +604,7 @@ NMOS connected to VGND
 
 ![Screenshot (105)](https://github.com/user-attachments/assets/2882b3f5-38b7-4d59-b56d-e9b66b37d4d1)
 
-
+3. Make a spice file of the inverter
 ```bash
 # Check current directory
 pwd
@@ -626,12 +629,70 @@ Screenshot of spice file
 ![Screenshot (108)](https://github.com/user-attachments/assets/2895e4a6-b8ef-4de6-88ad-5f26d5333dc4)
 
 
+Screenshot of the spice file
+
+![Screenshot (106)](https://github.com/user-attachments/assets/9ba20a33-f1af-4259-aae1-90ba68671780)
 
 
+Area of a block
+
+![Screenshot (109)](https://github.com/user-attachments/assets/a53b5421-e070-4a9e-adc2-9adfaeae9e3b)
+
+4. Edit the spice file
+
+From this to
+![Screenshot (108)](https://github.com/user-attachments/assets/0b0ce338-fc22-4282-a502-1a7f1a7bc70a)
+
+This
+![Screenshot (112)](https://github.com/user-attachments/assets/7772755e-9abc-468f-b49c-3b5b7b28d30a)
 
 
+5. Run Spice file for ngspice simulations
 
+```bash
 
+# Commmand to run ngspice simulations
+ngspice sky130_inv.spice
+
+```
+Scrrenshot of running ngspice
+
+![Screenshot (113)](https://github.com/user-attachments/assets/921e69fb-d5cd-4477-8361-e709dda1674b)
+
+```bash
+# Command to load the plot(graph)
+plot y vs time a
+
+```
+Plot
+![Screenshot (114)](https://github.com/user-attachments/assets/76a9eab3-9235-4d58-919e-5acf597cdc3d)
+
+Calculation for rise time
+
+```math
+20\%\ of\ output = 660\ mV
+```
+```math
+80\%\ of\ output = 2.64\ V
+```
+
+20% (660mV)
+
+![Screenshot (116)](https://github.com/user-attachments/assets/c2f55c4a-97dd-499c-bb17-5bf79100223f)
+![Screenshot (117)](https://github.com/user-attachments/assets/c620953d-ad82-4f0e-a1d7-21906dc73e0f)
+
+80% (2.64V)
+
+![Screenshot (120)](https://github.com/user-attachments/assets/23172beb-92db-4b31-aba4-cbd1fd0df7cf)
+![Screenshot (119)](https://github.com/user-attachments/assets/ef78b270-5ec2-49d2-9695-956a0084c9b8)
+
+```math
+Rise\ transition\ time = Time\ taken\ for\ output\ to\ rise\ to\ 80\% - Time\ taken\ for\ output\ to\ rise\ to\ 20\%
+```
+
+```math
+Rise\ transition\ time = 2.25221 - 1.125 = 1.12721\ ns = 1,127.21\ ps
+```
 
 
 
