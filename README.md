@@ -539,14 +539,91 @@ The CMOS fabrication process focuses on creating the physical structure of the t
 
 #### Section 3 Lab tasks
 
-1.
+1.Clone the web URL in vsdstdcelldesign and copy the file to vsdstdcelldesign directory
+2. Open the inverter in magic and explore
 
 
+```bash
+# Change the directory to openlane
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Clone the repository from this command
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+
+# Change into repository directory
+cd vsdstdcelldesign
+
+# Copy magic tech file to the vsdstdcelldesign directory
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech
+
+# Check if it is there or not
+ls
+```
+Screenshot while copying it
+
+![Screenshot (94)](https://github.com/user-attachments/assets/178e8d73-878d-497d-92c8-3748a24421d4)
+
+Cheking if it is there or not
+
+![Screenshot (93)](https://github.com/user-attachments/assets/a2195d18-6ebf-4d31-9b97-d92e95e450e8)
+
+2. Open the inverter in magic
+
+Command to open the inverter in magic
+
+```bash
+
+# Command to open inverter in magic
+magic -T sky130A.tech sky130_inv.mag &
+
+```
+ Screenshot of inverter in magic
+
+![Screenshot (96)](https://github.com/user-attachments/assets/c29498d6-5d6b-4426-b3b0-ca00c207caf3)
+![Screenshot (95)](https://github.com/user-attachments/assets/d4d14350-0d69-46b1-9980-84277a917993)
+
+NMOS
+
+![Screenshot (97)](https://github.com/user-attachments/assets/3af3b05f-c055-40bb-8515-38a66683c5d3)
+
+PMOS
+
+![Screenshot (98)](https://github.com/user-attachments/assets/9ec3904f-9df7-4d13-ae5b-045991ef2b46)
+
+Y output connected to PMOS and NMOS
+
+![Screenshot (100)](https://github.com/user-attachments/assets/5864ec7c-3a38-48d1-9994-85c4028bca7e)
+
+PMOS connected to VPWR
 
 
+NMOS connected to VGND 
+
+![Screenshot (105)](https://github.com/user-attachments/assets/2882b3f5-38b7-4d59-b56d-e9b66b37d4d1)
 
 
+```bash
+# Check current directory
+pwd
 
+# command to extract to .ext file
+extract all
+
+# command to set current threshold (cthresh) and resistance threshold (rthresh) to 0, meaning no thresholds are applied in the SPICE simulation, simplifying the model.
+
+ext2spice cthresh 0 rthresh 0
+
+# Convert from .ext to .spice
+ext2spice
+```
+Screenshot of running these commands
+
+![Screenshot (107)](https://github.com/user-attachments/assets/f4ff9434-b928-44bc-bf54-41a7f432482f)
+
+
+Screenshot of spice file
+
+![Screenshot (108)](https://github.com/user-attachments/assets/2895e4a6-b8ef-4de6-88ad-5f26d5333dc4)
 
 
 
