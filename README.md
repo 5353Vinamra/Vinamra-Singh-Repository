@@ -694,6 +694,43 @@ Rise\ transition\ time = Time\ taken\ for\ output\ to\ rise\ to\ 80\% - Time\ ta
 Rise\ transition\ time = 2.25221 - 1.125 = 1.12721\ ns = 1,127.21\ ps
 ```
 
+Rise Cell Delay Calculation
+
+```math
+50\%\ of\ 3.3\ V = 1.65\ V
+```
+
+50% (1.65V)
+
+![Screenshot (122)](https://github.com/user-attachments/assets/39f32a7d-aa78-42e0-89dd-deaba7c82927)
+![Screenshot (121)](https://github.com/user-attachments/assets/54dc552b-16dc-4c14-be36-24dad4cd719d)
+
+```math
+Rise\ Cell\ Delay = Time\ taken\ for\ output\ to\ rise\ to\ 50\% - Time\ taken\ for\ input\ to\ fall\ to\ 50\%
+```
+
+```math
+Rise\ Cell\ Delay = 2.21156 - 2.15016 = 0.0614\ ns = 61.4\ ps
+```
+
+Cell fall delay calculation
+
+```math
+50\%\ of\ 3.3\ V = 1.65\ V
+```
+
+50% (1.65V)
+
+![Screenshot (124)](https://github.com/user-attachments/assets/0a5b9946-2120-4c88-b873-24297a21ef3c)
+![Screenshot (123)](https://github.com/user-attachments/assets/5fc4c2ad-ac3c-4764-a095-a3e5ea02a212)
+
+
+```math
+Fall\ Cell\ Delay = Time\ taken\ for\ output\ to\ fall\ to\ 50\% - Time\ taken\ for\ input\ to\ rise\ to\ 50\%
+```
+```math
+Fall\ Cell\ Delay = 4.07 - 4.05 = 0.02\ ns = 20\ ps
+```
 
 
 
