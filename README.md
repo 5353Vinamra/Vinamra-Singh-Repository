@@ -1,5 +1,5 @@
-# Vinamra-Singh Repository 
-## Advanced Physical Design Using OpenLane/Sky130
+# Author Vinamra Singh
+## Course - Advanced Physical Design Using OpenLane/Sky130
 ### Section 1 Inception of open-source EDA, OpenLANE and Sky130 PDK
 #### Brief Overview
 Introduction to QFN-48 Package, Chip, Pads, Core, Die, and IPs
